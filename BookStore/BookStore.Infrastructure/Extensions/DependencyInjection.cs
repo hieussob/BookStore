@@ -14,6 +14,7 @@ namespace BookStore.Infrastructure.Extensions
             {
                 options.UseSqlServer(connectionString);
             });
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IBookRepository, BookRepository>();
 
