@@ -1,11 +1,8 @@
-﻿using BookStore.Domain.Entities;
+﻿using BookStore.Domain.Constants;
+using BookStore.Domain.Entities;
 using BookStore.Domain.IRepositories;
 using BookStore.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Infrastructure.Repositories
 {
@@ -19,7 +16,7 @@ namespace BookStore.Infrastructure.Repositories
         {
             var today = DateTime.Today;
             return await _dbSet
-                .Where(x => x.Status == CouponStatus.khaDung && x.ValidFrom <= today && x.ValidUntil >= today)
+                .Where(x => x.Status.Equals(Constants.AVAILABLE) && x.ValidFrom <= today && x.ValidUntil >= today)
                 .ToListAsync();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using BookStore.Application.Features.Books.Commands;
 using BookStore.Application.Features.Books.Queries;
+using BookStore.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +8,10 @@ namespace BookStore.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookController : Controller
+    public class BooksController : Controller
     {
         private readonly IMediator _mediator;
-        public BookController(IMediator mediator)
+        public BooksController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -27,6 +28,13 @@ namespace BookStore.WebAPI.Controllers
         {
             var bookId = await _mediator.Send(command);
             return CreatedAtAction(nameof(GetBooks), new { id = bookId }, bookId);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Book>> GetBook(Guid id)
+        {
+            var res = await _mediator.Send(new GetBookIdQuery(id));
+            return Ok(res);
         }
     }
 }

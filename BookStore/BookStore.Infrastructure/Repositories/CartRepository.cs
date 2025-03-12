@@ -69,7 +69,7 @@ namespace BookStore.Infrastructure.Repositories
             var result = books.Select(book => new
             {
                 Book = book,
-                SoLuong = listItem.FirstOrDefault(item => item.BookId == book.Id)?.Soluong ?? 0
+                SoLuong = listItem.FirstOrDefault(item => item.BookId == book.Id)?.Quantity ?? 0
             }).ToList();
 
             foreach (var item in books)
