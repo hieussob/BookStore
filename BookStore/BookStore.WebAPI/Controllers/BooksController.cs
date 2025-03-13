@@ -34,7 +34,16 @@ namespace BookStore.WebAPI.Controllers
         public async Task<ActionResult<Book>> GetBook(Guid id)
         {
             var res = await _mediator.Send(new GetBookIdQuery(id));
+
             return Ok(res);
         }
+        [HttpGet("getAllSanPhamWithFilter/{keyword}/{categoryId}/{rangeFrom}/{rangeTo}/{order}/{page}")]
+        public async Task<ActionResult<Book>> getAllSanPhamWithFilter(string keyword, Guid categoryId, int rangeFrom, int rangeTo, int order, int page)
+        {
+            var result = await _mediator.Send(new GetBooksFilterQuery(keyword, categoryId, rangeFrom, rangeTo, order, page));
+
+            return Ok(result);
+        }
+
     }
 }
